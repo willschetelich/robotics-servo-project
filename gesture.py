@@ -5,7 +5,7 @@ import cv2
 import serial
 
 # config serial
-ser = serial.Serial('/dev/tty.usbmodem101', 115200) 
+ser = serial.Serial('/dev/tty.usbmodem2101', 115200)
 
 
 
@@ -34,7 +34,7 @@ while cap.isOpened():
     mp_image = mp.Image(image_format=mp.ImageFormat.SRGB, data=frame_rgb)
     result = detector.detect(mp_image)
 
-
+ 
     i = i+1
     # print(result.handedness, i)
     if result.hand_landmarks:
@@ -51,11 +51,11 @@ while cap.isOpened():
         
         angle = int(percentage * 180)
         angle = angle - 90
-        angle = angle * 2
+        angle = int(angle * 2) -50
 
 
-        angle = max(50, min(110, angle))
-
+        angle = max(70, min(200, angle))
+        
         print(angle)
         ser.write(f"{angle};".encode())
 
